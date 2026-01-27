@@ -11,9 +11,13 @@ class Movement{
     private:
         Encoder* encoder;
         PID* pid;
+        int RPWM,LPWM;
+        float nilai_PWM_ke_roda;
     public:
-        Movement(float Kp, float Ki, float Kd, int chanelA, int ChanelB, float diameter, float ppr);
-        float update(float target);
+        Movement(
+            float Kp, float Ki, float Kd, int chanelA, int ChanelB,
+              float ppr,int RPWM, int LPWM);
+        void update(float target);
         void begin();
 
 
