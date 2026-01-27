@@ -36,14 +36,30 @@ void loop() {
 }
 
 void move(int forward, int strafe, int turn){
+
+  int threshold = 5; 
+  
+  if (abs(forward) < threshold && abs(strafe) < threshold && abs(turn) < threshold) {
+    
+    Fr->resetPID(); 
+    Fl->resetPID();
+    Br->resetPID();
+    Bl->resetPID();
+
+    forward = 0;
+    strafe = 0;
+    turn = 0;
+  }
   int vfl = forward + strafe + turn; 
   int vfr = forward - strafe - turn; 
   int vbl = forward - strafe + turn;
   int vbr = forward + strafe - turn;
+
+  
   
   float max_val = std::max({abs(vfl), abs(vfr), abs(vbl), abs(vbr)});
 
- if (max_val > 255) {
+  if (max_val > 255) {
     vfl = (vfl / max_val) * 255;
     vfr = (vfr / max_val) * 255;
     vbl = (vbl / max_val) * 255;
@@ -75,4 +91,5 @@ void control(){
     Serial.println("lingkaran di tekan");   
     delay(200);
   }
+  
 }

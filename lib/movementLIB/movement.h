@@ -19,6 +19,7 @@ class Movement{
               float ppr,int RPWM, int LPWM);
         void update(float target);
         void begin();
+        void resetPID();
 
 
 };

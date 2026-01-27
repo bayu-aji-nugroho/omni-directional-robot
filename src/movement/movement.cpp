@@ -17,7 +17,7 @@ void Movement::update(float target){
     if(nilai_PWM_ke_roda > 0){
         analogWrite(RPWM, nilai_PWM_ke_roda);
         analogWrite(LPWM,0);
-    } else if(nilai_PWM_ke_roda <0){
+    } else if(nilai_PWM_ke_roda < 0){
         analogWrite(LPWM, nilai_PWM_ke_roda*(-1));
         analogWrite(RPWM,0);
     }
@@ -27,5 +27,9 @@ void Movement::begin(){
     encoder -> begin();
     pinMode(RPWM, OUTPUT);
     pinMode(LPWM, OUTPUT);
+}
+
+void Movement::resetPID() {
+    pid->reset();
 }
 
