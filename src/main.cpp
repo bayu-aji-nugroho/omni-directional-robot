@@ -5,26 +5,31 @@
 #include <nvs_flash.h>
 
 Movement *Fr,*Fl,*Br, *Bl;
-boolean show = true;
+void control();
+int ppr = 7;
 
 void setup() {
+  Serial.begin(115200);
   nvs_flash_erase(); 
   nvs_flash_init();
-  Serial.begin(115200);
   delay(2000);
 
-  PS4.begin("40:1A:58:62:D6:A2");  
-  Serial.print("program berjalan");
- 
-  Fr = new Movement(0.1,0.01,0.1,34,35,1,12,13);
-  Fl = new Movement(0.1,0.01,0.1,1,1,1,1,1);
-  Bl = new Movement(0.1,0.01,0.1,1,1,1,1,1);
-  Br = new Movement(0.1,0.01,0.1,1,1,1,1,1);
+  PS4.begin("40:1A:58:62:D6:A2"); 
+  
+  Serial.println("program berjalan");
+  
+  
+  // Kp,Ki,Kd, chanel A, chanel B, ppr, rpwm, lpwm
+  //note cha a dan b pake resistor 4.7k Ohm yang dihubungkan ke 3.3v
+  Fr = new Movement(0.1,0.01,0.1,34,35,ppr,12,13);
+  // Fl = new Movement(0.1,0.01,0.1,36,39,ppr,14,27);
+  // Bl = new Movement(0.1, 0.01, 0.1, 32, 33, ppr, 26, 25);
+  // Br = new Movement(0.1, 0.01, 0.1, 16, 17, ppr, 19, 18);
 
   Fr->begin();
-  Fl->begin();
-  Br->begin();
-  Bl->begin();
+  // Fl->begin();
+  // Br->begin();
+  // Bl->begin();
   
 }
 
@@ -37,14 +42,12 @@ void loop() {
 
 void move(int forward, int strafe, int turn){
 
-  int threshold = 5; 
-  
+  int threshold = 8; // Deadzone, nilai def gamepad kadang error
   if (abs(forward) < threshold && abs(strafe) < threshold && abs(turn) < threshold) {
-    
     Fr->resetPID(); 
-    Fl->resetPID();
-    Br->resetPID();
-    Bl->resetPID();
+    // Fl->resetPID();
+    // Br->resetPID();
+    // Bl->resetPID();
 
     forward = 0;
     strafe = 0;
@@ -65,15 +68,15 @@ void move(int forward, int strafe, int turn){
     vbl = (vbl / max_val) * 255;
     vbr = (vbr / max_val) * 255;
   }
-  float Vfr = map(vfr, -255, 255, -100, 100);  
-  float Vfl = map(vfl, -255, 255, -100, 100); 
-  float Vbr = map(vbr, -255, 255, -100, 100);  
-  float Vbl = map(vbl, -255, 255, -100, 100);  
+  // float Vfr = map(vfr, -255, 255, -100, 100);  
+  // float Vfl = map(vfl, -255, 255, -100, 100); 
+  // float Vbr = map(vbr, -255, 255, -100, 100);  
+  // float Vbl = map(vbl, -255, 255, -100, 100);  
 
-  Fr->update(Vfr);
-  Fl->update(Vfl);
-  Br->update(Vbr);
-  Bl->update(Vbl);                                    
+  Fr->update(vfr);
+  // Fl->update(vfl);
+  // Br->update(vbr);
+  // Bl->update(vbl);                                    
 }
 
 void control(){

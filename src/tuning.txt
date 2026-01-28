@@ -4,6 +4,8 @@ yang perlu diperhatikan:
 2. robot harus sudah diberi beban
 3. nilai bisa di samain untuk semua roda tapi sangat tidak direkomendasikan
 4. pwm boleh/dianjurkan berbeda-beda
+5. pastikan Battery Voltage dalam kondisi penuh (Full).
+6. nilai setpoint/nilai hasil perhitungan gamepad harus di buat konstan[jgn pake gamepad] agar gampang dihitung
 
 - Awal
 1. robot diangkat agar tidak berpindah tempat ketika tuning

@@ -29,7 +29,6 @@ Encoder::Encoder(int a, int b, float pulses)
         instances[instanceCount] = this;
         instanceCount++;
     } else {
-        Serial.println("ERROR: Maksimal 4 encoder!");
         instanceIndex = -1;
     }
 }
